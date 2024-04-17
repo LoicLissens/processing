@@ -79,3 +79,27 @@ let sandFallSketch = function(p) {
   };
 };
 let sandFallP5 = new p5(sandFallSketch, "sand-fall");
+
+// BOUNCING BALL
+let bouncingBallP5 = new p5((p) => {
+  let x = 100;
+  let y = 100;
+  let xspeed = 2.5;
+  let yspeed = 2;
+  p.setup = () => {
+    p.createCanvas(600, 400);
+  };
+  p.draw = () => {
+    p.background(0);
+    p.fill(255);
+    p.ellipse(x, y, 50, 50)
+    x = x + xspeed;
+    y = y + yspeed;
+    if (x > p.width || x < 0){
+      xspeed = xspeed * -1
+    }
+    if (y > p.height || y < 0){
+      yspeed = yspeed * -1
+    }
+  };
+}, "bouncing-ball");

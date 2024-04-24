@@ -79,27 +79,49 @@ let sandFallSketch = function(p) {
   };
 };
 let sandFallP5 = new p5(sandFallSketch, "sand-fall");
-
+class Mover{
+  constructor(pos,vel){
+    this._position = pos
+    this.velocity = vel
+  }
+  get x(){
+    return this._position.x
+  }
+  get y(){
+    return this._position.y
+  }
+  update(){
+    this._position.add(this.velocity)
+  }
+}
 // BOUNCING BALL
 let bouncingBallP5 = new p5((p) => {
-  let x = 100;
-  let y = 100;
-  let xspeed = 2.5;
-  let yspeed = 2;
+  const heightBall = 50
+  const widthBall = 50
+
+  let velocity = p.createVector(2.5,2)
+  let position = p.createVector(100,100)
+
+  ball = new Mover(position,velocity)
+
+
+  const checkCollision = () => {
+    if (ball.x + (widthBall/2)  > p.width || ball.x - (widthBall/2) < 0){
+      ball.velocity.x =  ball.velocity.x  * -1
+    }
+    if (ball.y + (heightBall/2) > p.height || ball.y - (heightBall/2) < 0){
+      ball.velocity.y  = ball.velocity.y * -1
+    }
+  }
+
   p.setup = () => {
     p.createCanvas(600, 400);
   };
   p.draw = () => {
     p.background(0);
     p.fill(255);
-    p.ellipse(x, y, 50, 50)
-    x = x + xspeed;
-    y = y + yspeed;
-    if (x > p.width || x < 0){
-      xspeed = xspeed * -1
-    }
-    if (y > p.height || y < 0){
-      yspeed = yspeed * -1
-    }
+    p.ellipse(ball.x, ball.y, heightBall, widthBall)
+    ball.update()
+    checkCollision()
   };
 }, "bouncing-ball");

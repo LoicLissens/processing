@@ -96,6 +96,10 @@ class Mover{
     this._position.add(this.velocity)
     this._checkCollision(p)
   }
+  displyay(p){
+    p.fill(255);
+    p.ellipse(this.x, this.y, this.height, this.width)
+  }
   _checkCollision(p){ // Can also set the position to 0 if it goes out of bound
     if (this.x + (this.width/2)  > p.width || this.x - (this.width/2) < 0){
       this.velocity.x =  this.velocity.x  * -1
@@ -121,8 +125,7 @@ let bouncingBallP5 = new p5((p) => {
   };
   p.draw = () => {
     p.background(0);
-    p.fill(255);
-    p.ellipse(ball.x, ball.y, heightBall, widthBall)
+    ball.displyay(p)
     ball.update(p)
   };
 }, "bouncing-ball");
@@ -156,8 +159,7 @@ let bouncingBallWithMouseP5 = new p5((p) => {
   };
   p.draw = () => {
     p.background(0);
-    p.fill(255);
-    p.ellipse(ball.x, ball.y, heightBall, widthBall)
+    ball.displyay(p)
     ball.update(p)
   };
 }, "bouncing-ball-mouse");

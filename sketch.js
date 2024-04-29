@@ -80,9 +80,11 @@ let sandFallSketch = function(p) {
 };
 let sandFallP5 = new p5(sandFallSketch, "sand-fall");
 class Mover{
-  constructor(pos,vel){
+  constructor(pos,vel,height,width){
     this._position = pos
     this.velocity = vel
+    this.height = height
+    this.width = width
   }
   get x(){
     return this._position.x
@@ -90,8 +92,17 @@ class Mover{
   get y(){
     return this._position.y
   }
-  update(){
+  update(p){
     this._position.add(this.velocity)
+    this._checkCollision(p)
+  }
+  _checkCollision(p){ // Can also set the position to 0 if it goes out of bound
+    if (this.x + (this.width/2)  > p.width || this.x - (this.width/2) < 0){
+      this.velocity.x =  this.velocity.x  * -1
+    }
+    if (this.y + (this.height/2) > p.height || this.y - (this.height/2) < 0){
+      this.velocity.y  = this.velocity.y * -1
+    }
   }
 }
 // BOUNCING BALL
@@ -102,17 +113,8 @@ let bouncingBallP5 = new p5((p) => {
   let velocity = p.createVector(2.5,2)
   let position = p.createVector(100,100)
 
-  ball = new Mover(position,velocity)
+  const ball = new Mover(position,velocity, heightBall, widthBall)
 
-
-  const checkCollision = () => {
-    if (ball.x + (widthBall/2)  > p.width || ball.x - (widthBall/2) < 0){
-      ball.velocity.x =  ball.velocity.x  * -1
-    }
-    if (ball.y + (heightBall/2) > p.height || ball.y - (heightBall/2) < 0){
-      ball.velocity.y  = ball.velocity.y * -1
-    }
-  }
 
   p.setup = () => {
     p.createCanvas(600, 400);
@@ -121,7 +123,41 @@ let bouncingBallP5 = new p5((p) => {
     p.background(0);
     p.fill(255);
     p.ellipse(ball.x, ball.y, heightBall, widthBall)
-    ball.update()
-    checkCollision()
+    ball.update(p)
   };
 }, "bouncing-ball");
+
+class MoverWithMouse extends Mover{
+  constructor(pos,vel,height,width){
+    super(pos,vel,height,width)
+  }
+  update(p){
+    const mouseVec = p.createVector(p.mouseX,p.mouseY)
+    const dir = p5.Vector.sub(mouseVec,this._position)
+    dir.normalize()
+    this.velocity.add(dir.mult(0.5))
+    this.velocity.limit(10)
+    this._position.add(this.velocity)
+    this._checkCollision(p)
+  }
+}
+// BOUNCING BALL with mouse
+let bouncingBallWithMouseP5 = new p5((p) => {
+  const heightBall = 50
+  const widthBall = 50
+
+  let velocity = p.createVector(2.5,2)
+  let position = p.createVector(100,100)
+
+  const ball = new MoverWithMouse(position,velocity, heightBall, widthBall)
+
+  p.setup = () => {
+    p.createCanvas(600, 400);
+  };
+  p.draw = () => {
+    p.background(0);
+    p.fill(255);
+    p.ellipse(ball.x, ball.y, heightBall, widthBall)
+    ball.update(p)
+  };
+}, "bouncing-ball-mouse");

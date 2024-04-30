@@ -125,8 +125,8 @@ let bouncingBallP5 = new p5((p) => {
   };
   p.draw = () => {
     p.background(0);
-    ball.displyay(p)
     ball.update(p)
+    ball.displyay(p)
   };
 }, "bouncing-ball");
 
@@ -159,7 +159,9 @@ let bouncingBallWithMouseP5 = new p5((p) => {
   };
   p.draw = () => {
     p.background(0);
-    ball.displyay(p)
     ball.update(p)
+    ball.displyay(p)
   };
 }, "bouncing-ball-mouse");
+
+//TODO game of life

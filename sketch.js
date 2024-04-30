@@ -164,4 +164,3 @@ let bouncingBallWithMouseP5 = new p5((p) => {
   };
 }, "bouncing-ball-mouse");
 
-//TODO game of life

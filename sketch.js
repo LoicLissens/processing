@@ -79,36 +79,7 @@ let sandFallSketch = function(p) {
   };
 };
 let sandFallP5 = new p5(sandFallSketch, "sand-fall");
-class Mover{
-  constructor(pos,vel,height,width){
-    this._position = pos
-    this.velocity = vel
-    this.height = height
-    this.width = width
-  }
-  get x(){
-    return this._position.x
-  }
-  get y(){
-    return this._position.y
-  }
-  update(p){
-    this._position.add(this.velocity)
-    this._checkCollision(p)
-  }
-  displyay(p){
-    p.fill(255);
-    p.ellipse(this.x, this.y, this.height, this.width)
-  }
-  _checkCollision(p){ // Can also set the position to 0 if it goes out of bound
-    if (this.x + (this.width/2)  > p.width || this.x - (this.width/2) < 0){
-      this.velocity.x =  this.velocity.x  * -1
-    }
-    if (this.y + (this.height/2) > p.height || this.y - (this.height/2) < 0){
-      this.velocity.y  = this.velocity.y * -1
-    }
-  }
-}
+
 // BOUNCING BALL
 let bouncingBallP5 = new p5((p) => {
   const heightBall = 50
@@ -130,20 +101,7 @@ let bouncingBallP5 = new p5((p) => {
   };
 }, "bouncing-ball");
 
-class MoverWithMouse extends Mover{
-  constructor(pos,vel,height,width){
-    super(pos,vel,height,width)
-  }
-  update(p){
-    const mouseVec = p.createVector(p.mouseX,p.mouseY)
-    const dir = p5.Vector.sub(mouseVec,this._position)
-    dir.normalize()
-    this.velocity.add(dir.mult(0.5))
-    this.velocity.limit(10)
-    this._position.add(this.velocity)
-    this._checkCollision(p)
-  }
-}
+
 // BOUNCING BALL with mouse
 let bouncingBallWithMouseP5 = new p5((p) => {
   const heightBall = 50
@@ -164,3 +122,14 @@ let bouncingBallWithMouseP5 = new p5((p) => {
   };
 }, "bouncing-ball-mouse");
 
+// PENDULUM
+const pendulumSwingBasic = new p5((p)=> {
+  const pendulum =  new Pendulum(p.createVector(300,200),p.createVector(),50)
+  p.setup = () => {
+    p.createCanvas(600, 400);
+  };
+  p.draw = () => {
+    p.background(0);
+    pendulum.go(p)
+  };
+})

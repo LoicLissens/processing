@@ -10,11 +10,11 @@ function make2DArray(cols, rows) { //TODO: Add to an util file
 }
 function countAdjacentCells(grid, x, y) {
   let count = 0
+  return count
 }
 
 // https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#:~:text=A%20cell%20is%20born%20if,survive%20to%20the%20next%20generation.
-// Conway's game of life
-let bouncingBallWithMouseP5 = new p5((p) => {
+let gameOfLife = new p5((p) => {
   let cols, rows;
   let grid;
   let w = 10;
@@ -24,8 +24,10 @@ let bouncingBallWithMouseP5 = new p5((p) => {
     rows = p.height / w
     grid = make2DArray(cols, rows)
     grid[cols / 2][rows / 2] = 1 // first point in the middle
+    p.noLoop();
   };
   p.draw = () => {
+    console.log("draw");
     p.background(255); // Set the background to white
     p.rect(0, 0, p.width - 1, p.height - 1);
     for (let i = 0; i < cols; i++) {

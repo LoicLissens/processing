@@ -1,0 +1,28 @@
+mixin navbar(currentPage)
+  nav
+    ul
+      li
+        if currentPage == 'index'
+          a(disabled) Home
+        else
+          a(href='index.html') Home
+      li
+        if currentPage == 'life'
+          a(disabled) Game of life
+        else
+          a(href='life.html') Game of life
+      li
+        if currentPage == 'chapitre 1'
+          a(disabled) Chapitre 1
+        else
+          a(href='chap1.html') Chapitre 1
+      li
+        if currentPage == 'chapitre 3'
+          a(disabled) Chapitre 3
+        else
+          a(href='chap3.html') Chapitre 3
+      li
+        if currentPage == 'chapitre 4'
+          a(disabled) Chapitre 4
+        else
+          a(href='chap4.html') Chapitre 4

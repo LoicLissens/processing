@@ -1,0 +1,13 @@
+mixin navbar(currentPage)
+  nav
+    ul
+      li
+        if currentPage == 'index'
+          a(disabled) Home
+        else
+          a(href='index.html') Home
+      li
+        if currentPage == 'life'
+          a(disabled) Game of life
+        else
+          a(href='life.html') Game of life

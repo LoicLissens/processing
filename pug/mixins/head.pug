@@ -4,7 +4,7 @@ mixin head(scriptPath,title)
         head
             meta(charset="UTF-8")
             meta(name="viewport", content="width=device-width, initial-scale=1.0")
-            script(src="p5.min.js" defer)
-            script(src='classes.js' defer)
-            script(src=scriptPath defer)
+            script(src="./js/p5.min.js" defer)
+            script(src='./js/classes.js' defer)
+            script(src='./js/'+scriptPath defer)
             title title

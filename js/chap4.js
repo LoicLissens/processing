@@ -58,3 +58,43 @@ const PSWithRepeller = new p5((p) => {
         system.run(p)
     }
 }, "ps-w-repeller")
+
+// 4.10 Smoke effect
+const smokeEffect = new p5((p) => {
+    const system = new SmokeParticleSystem(300, 200)
+    let img
+    p.setup = () => {
+        img = p.loadImage("../data/texture.png")
+        p.createCanvas(600, 400);
+    }
+    p.draw = () => {
+        p.clear()
+        p.background(0);
+        const dx = p.map(p.mouseX, 0, p.width, -0.2, 0.2)
+        const wind = new p5.Vector(dx, 0)
+        system.addForceToApply(wind)
+        system.addParticle(p,img)
+        system.run(p)
+    }
+}, "smoke-effect")
+// Smoke effect with
+const smokeEffectBlending = new p5((p) => {
+    const system = new SmokeParticleSystem(0, 75,blended=true)
+    let img
+    p.preload =  () =>{
+        img = p.loadImage("../data/texture.png")
+    }
+    p.setup = () => {
+        p.createCanvas(600, 400,p.WEBGL);
+    }
+    p.draw = () => {
+        p.blendMode(p.ADD) // Blend color mode (see docs)
+        p.clear()
+        p.background(0);
+        const dx = p.map(p.mouseX, 0, p.width, -0.2, 0.2)
+        const wind = new p5.Vector(dx, 0)
+        system.addForceToApply(wind)
+        system.addParticle(p,img)
+        system.run(p)
+    }
+}, "smoke-effect-blending")
